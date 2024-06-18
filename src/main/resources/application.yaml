@@ -5,6 +5,8 @@ server:
   servlet:
     context-path: /wishlist/v1
 spring:
+  cache:
+    type: redis
   application:
     name: Wishlist
   data:
@@ -16,8 +18,8 @@ spring:
   redis:
     host: ${SPRING_REDIS_HOST:localhost}
     port: ${SPRING_REDIS_PORT:6379}
-  mvc:
-    content-negotiation:
-      default-type: application/json
 wishlist:
   user-max-limit: 20
+redis:
+  timeout: 2000
+  maximumActiveConnectionCount: 100

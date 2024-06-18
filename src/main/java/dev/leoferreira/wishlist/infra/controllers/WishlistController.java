@@ -2,10 +2,15 @@ package dev.leoferreira.wishlist.infra.controllers;
 
 import dev.leoferreira.wishlist.domain.Wishlist;
 import dev.leoferreira.wishlist.infra.dtos.WishlistResponseDTO;
+import dev.leoferreira.wishlist.infra.dtos.WishlistResponseListDTO;
 import dev.leoferreira.wishlist.infra.mappers.dtos.ResponseDTOMapper;
 import dev.leoferreira.wishlist.services.WishlistService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
+import org.springframework.cache.annotation.Caching;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -27,14 +32,23 @@ public class WishlistController implements WishlistApiDoc {
     private ResponseDTOMapper<WishlistResponseDTO, Wishlist> wishlistResponseDTOMapper;
 
     @GetMapping
-    public List<WishlistResponseDTO> getAllWishlists(@PathVariable String userId) {
-        return wishlistResponseDTOMapper.toDTOList(
-                wishlistService.getAllWishlists(userId)
+    @Cacheable(value = "wishlist", key = "#userId")
+    public WishlistResponseListDTO getAllWishlists(@PathVariable String userId) {
+        return new WishlistResponseListDTO(
+                wishlistResponseDTOMapper.toDTOList(
+                        wishlistService.getAllWishlists(userId)
+                )
         );
     }
 
     @PostMapping("/products/{productId}")
     @ResponseStatus(HttpStatus.CREATED)
+    @Caching(
+            put = {
+                    @CachePut(value = "wishlist", key = "#userId"),
+                    @CachePut(value = "wishlist-product", key = "#userId + ':' + #productId")
+            }
+    )
     public WishlistResponseDTO createWishlist(
             @PathVariable String userId,
             @PathVariable String productId
@@ -48,6 +62,7 @@ public class WishlistController implements WishlistApiDoc {
 
     @GetMapping("/products/{productId}")
     @ResponseStatus(HttpStatus.CREATED)
+    @Cacheable(value = "wishlist-product", key = "#userId + ':' + #productId")
     public WishlistResponseDTO getWishlistByProduct(
             @PathVariable String userId,
             @PathVariable String productId
@@ -61,6 +76,12 @@ public class WishlistController implements WishlistApiDoc {
 
     @DeleteMapping("/products/{productId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
+    @Caching(
+            evict = {
+                    @CacheEvict(value = "wishlist", key = "#userId"),
+                    @CacheEvict(value = "wishlist-product", key = "#userId + ':' + #productId")
+            }
+    )
     public void removeWishlist(
             @PathVariable String userId,
             @PathVariable String productId

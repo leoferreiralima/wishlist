@@ -39,7 +39,14 @@ services:
       - '6379:6379'
     volumes:
       - redis_data:/data
-
+  redis-gui:
+    image: rediscommander/redis-commander:latest
+    ports:
+      - "8082:8081"
+    environment:
+      - REDIS_HOSTS=local:redis:6379
+    depends_on:
+      - redis
 volumes:
   mongo_data:
   redis_data:
