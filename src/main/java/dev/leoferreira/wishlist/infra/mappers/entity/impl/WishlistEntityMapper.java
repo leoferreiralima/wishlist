@@ -5,7 +5,7 @@ import dev.leoferreira.wishlist.infra.mappers.entity.EntityMapper;
 import dev.leoferreira.wishlist.infra.persistence.entity.WishlistEntity;
 import org.springframework.stereotype.Component;
 
-@Component
+@Component("wishlistEntityMapper")
 public class WishlistEntityMapper implements EntityMapper<WishlistEntity, Wishlist> {
 
     @Override

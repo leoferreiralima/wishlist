@@ -2,9 +2,10 @@ package dev.leoferreira.wishlist.infra.gateways;
 
 import dev.leoferreira.wishlist.domain.Wishlist;
 import dev.leoferreira.wishlist.gateways.WishlistGateway;
-import dev.leoferreira.wishlist.infra.mappers.entity.impl.WishlistEntityMapper;
+import dev.leoferreira.wishlist.infra.mappers.entity.EntityMapper;
 import dev.leoferreira.wishlist.infra.persistence.entity.WishlistEntity;
 import dev.leoferreira.wishlist.infra.persistence.respository.WishlistMongoRepository;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -13,11 +14,12 @@ import java.util.Optional;
 @Component
 public class WishlistMongoRepositoryGateway implements WishlistGateway {
 
-    private final WishlistEntityMapper wishlistEntityMapper;
+    private final EntityMapper<WishlistEntity, Wishlist> wishlistEntityMapper;
     private final WishlistMongoRepository wishlistMongoRepository;
 
     public WishlistMongoRepositoryGateway(
-            WishlistEntityMapper wishlistEntityMapper,
+            @Qualifier("wishlistEntityMapper")
+            EntityMapper<WishlistEntity, Wishlist> wishlistEntityMapper,
             WishlistMongoRepository wishlistMongoRepository
     ) {
         this.wishlistEntityMapper = wishlistEntityMapper;
