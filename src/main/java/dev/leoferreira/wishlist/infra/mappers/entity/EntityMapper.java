@@ -1,6 +1,5 @@
-package dev.leoferreira.wishlist.infra.mappers;
+package dev.leoferreira.wishlist.infra.mappers.entity;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;

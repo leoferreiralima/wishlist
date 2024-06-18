@@ -2,7 +2,7 @@ package dev.leoferreira.wishlist.infra.gateways;
 
 import dev.leoferreira.wishlist.domain.Wishlist;
 import dev.leoferreira.wishlist.gateways.WishlistGateway;
-import dev.leoferreira.wishlist.infra.mappers.impl.WishlistEntityMapper;
+import dev.leoferreira.wishlist.infra.mappers.entity.impl.WishlistEntityMapper;
 import dev.leoferreira.wishlist.infra.persistence.entity.WishlistEntity;
 import dev.leoferreira.wishlist.infra.persistence.respository.WishlistMongoRepository;
 import org.springframework.stereotype.Component;

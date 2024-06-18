@@ -1,7 +1,7 @@
-package dev.leoferreira.wishlist.infra.mappers.impl;
+package dev.leoferreira.wishlist.infra.mappers.entity.impl;
 
 import dev.leoferreira.wishlist.domain.Wishlist;
-import dev.leoferreira.wishlist.infra.mappers.EntityMapper;
+import dev.leoferreira.wishlist.infra.mappers.entity.EntityMapper;
 import dev.leoferreira.wishlist.infra.persistence.entity.WishlistEntity;
 import org.springframework.stereotype.Component;
 
