@@ -43,19 +43,6 @@ public class DefaultWishlistService implements WishlistService {
         return wishlistGateway.createWishlist(newWishlist);
     }
 
-    private void validateMaxLimitOfWishlistByUser(String userId) {
-        long wishlistCount = wishlistGateway.getWishlistCountByUser(userId);
-
-        if(wishlistCount >= wishlistConfig.userMaxLimit()) {
-            throw new WishlistCountExceededException(
-                    String.format(
-                            "You have reached the max limit of %d wishlists. To continue remove one wishlist first.",
-                            wishlistConfig.userMaxLimit()
-                    )
-            );
-        }
-    }
-
     @Override
     public List<Wishlist> getAllWishlists(String userId) {
         return wishlistGateway.getAllWishlists(userId);
@@ -89,6 +76,19 @@ public class DefaultWishlistService implements WishlistService {
                     String.format(
                             "Wishlist for current userId and productId '%s' already exists",
                             productId
+                    )
+            );
+        }
+    }
+
+    private void validateMaxLimitOfWishlistByUser(String userId) {
+        long wishlistCount = wishlistGateway.getWishlistCountByUser(userId);
+
+        if(wishlistCount >= wishlistConfig.userMaxLimit()) {
+            throw new WishlistCountExceededException(
+                    String.format(
+                            "You have reached the max limit of %d wishlists. To continue remove one wishlist first.",
+                            wishlistConfig.userMaxLimit()
                     )
             );
         }
