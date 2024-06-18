@@ -1,12 +1,12 @@
 package dev.leoferreira.wishlist.infra.dtos;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 public record WishlistResponseDTO(
         String id,
         String productId,
         String createdBy,
-        LocalDateTime createdAt
+        Instant createdAt
 ) implements Serializable {
 }

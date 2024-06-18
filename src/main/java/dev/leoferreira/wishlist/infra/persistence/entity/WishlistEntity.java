@@ -1,12 +1,13 @@
 package dev.leoferreira.wishlist.infra.persistence.entity;
 
+import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.CompoundIndex;
 import org.springframework.data.mongodb.core.index.CompoundIndexes;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 @Document("wishlists")
 @CompoundIndexes({
@@ -19,9 +20,10 @@ public class WishlistEntity {
     private final String productId;
     @Indexed
     private final String createdBy;
-    private final LocalDateTime createdAt;
+    @CreatedDate
+    private final Instant createdAt;
 
-    public WishlistEntity(String id, String productId, String createdBy, LocalDateTime createdAt) {
+    public WishlistEntity(String id, String productId, String createdBy, Instant createdAt) {
         this.id = id;
         this.productId = productId;
         this.createdBy = createdBy;
@@ -40,7 +42,7 @@ public class WishlistEntity {
         return createdBy;
     }
 
-    public LocalDateTime getCreatedAt() {
+    public Instant getCreatedAt() {
         return createdAt;
     }
 }

@@ -15,8 +15,6 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
-
 @RestController
 @RequestMapping(
         value = "/users/{userId}",
@@ -44,8 +42,10 @@ public class WishlistController implements WishlistApiDoc {
     @PostMapping("/products/{productId}")
     @ResponseStatus(HttpStatus.CREATED)
     @Caching(
+            evict = {
+                    @CacheEvict(value = "wishlist", key = "#userId")
+            },
             put = {
-                    @CachePut(value = "wishlist", key = "#userId"),
                     @CachePut(value = "wishlist-product", key = "#userId + ':' + #productId")
             }
     )
@@ -86,6 +86,6 @@ public class WishlistController implements WishlistApiDoc {
             @PathVariable String userId,
             @PathVariable String productId
     ) {
-        wishlistService.removeWishlistByProduct(userId, productId);
+        wishlistService.removeWishlist(userId, productId);
     }
 }

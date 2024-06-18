@@ -9,7 +9,6 @@ import dev.leoferreira.wishlist.gateways.WishlistGateway;
 import dev.leoferreira.wishlist.services.WishlistService;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -35,10 +34,8 @@ public class DefaultWishlistService implements WishlistService {
 
         Wishlist newWishlist = Wishlist.createWishlist(
                 productId,
-                userId,
-                LocalDateTime.now()
+                userId
         );
-
 
         return wishlistGateway.createWishlist(newWishlist);
     }
@@ -51,7 +48,7 @@ public class DefaultWishlistService implements WishlistService {
     @Override
     public Wishlist getWishlistByProduct(String userId, String productId) {
         return wishlistGateway.getWishlistByProduct(userId, productId).orElseThrow(
-                ()-> new WishlistNotFoundException(
+                () -> new WishlistNotFoundException(
                         String.format(
                                 "Cannot find wishlist register for current userId and productId '%s'",
                                 productId
@@ -61,7 +58,7 @@ public class DefaultWishlistService implements WishlistService {
     }
 
     @Override
-    public void removeWishlistByProduct(String userId, String productId) {
+    public void removeWishlist(String userId, String productId) {
         Wishlist wishlist = getWishlistByProduct(userId, productId);
         wishlistGateway.removeWishlist(wishlist);
     }
@@ -71,7 +68,7 @@ public class DefaultWishlistService implements WishlistService {
                 userId, productId
         );
 
-        if(storedWishlist.isPresent()) {
+        if (storedWishlist.isPresent()) {
             throw new WishlistAlreadyExistsException(
                     String.format(
                             "Wishlist for current userId and productId '%s' already exists",
@@ -84,7 +81,7 @@ public class DefaultWishlistService implements WishlistService {
     private void validateMaxLimitOfWishlistByUser(String userId) {
         long wishlistCount = wishlistGateway.getWishlistCountByUser(userId);
 
-        if(wishlistCount >= wishlistConfig.userMaxLimit()) {
+        if (wishlistCount >= wishlistConfig.userMaxLimit()) {
             throw new WishlistCountExceededException(
                     String.format(
                             "You have reached the max limit of %d wishlists. To continue remove one wishlist first.",

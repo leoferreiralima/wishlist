@@ -7,6 +7,8 @@ server:
 spring:
   cache:
     type: redis
+    redis:
+      time-to-live: 600000
   application:
     name: Wishlist
   data:
@@ -23,3 +25,4 @@ wishlist:
 redis:
   timeout: 2000
   maximumActiveConnectionCount: 100
+

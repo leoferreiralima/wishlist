@@ -1,18 +1,17 @@
 package dev.leoferreira.wishlist.domain;
 
-import java.time.LocalDateTime;
+import java.time.Instant;
 
 public record Wishlist(
         String id,
         String productId,
         String createdBy,
-        LocalDateTime createdAt
+        Instant createdAt
 ) {
     public static Wishlist createWishlist(
             String productId,
-            String createdBy,
-            LocalDateTime createdAt
+            String createdBy
     ) {
-        return new Wishlist(null, productId, createdBy, createdAt);
+        return new Wishlist(null, productId, createdBy, Instant.now());
     }
 }

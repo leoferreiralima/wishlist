@@ -14,5 +14,5 @@ public interface WishlistService {
 
     Wishlist getWishlistByProduct(String userId, String productId) throws WishlistNotFoundException;
 
-    void removeWishlistByProduct(String userId, String productId) throws WishlistNotFoundException;
+    void removeWishlist(String userId, String productId) throws WishlistNotFoundException;
 }

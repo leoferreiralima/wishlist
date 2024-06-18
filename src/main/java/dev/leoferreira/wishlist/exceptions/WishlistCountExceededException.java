@@ -8,11 +8,4 @@ public class WishlistCountExceededException extends ResponseStatusException {
         super(HttpStatus.BAD_REQUEST, reason);
     }
 
-    public WishlistCountExceededException(String reason, Throwable cause) {
-        super(HttpStatus.BAD_REQUEST, reason, cause);
-    }
-
-    protected WishlistCountExceededException(String reason, Throwable cause, String messageDetailCode, Object[] messageDetailArguments) {
-        super(HttpStatus.BAD_REQUEST, reason, cause, messageDetailCode, messageDetailArguments);
-    }
 }
