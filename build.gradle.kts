@@ -34,7 +34,10 @@ dependencies {
 	annotationProcessor("org.springframework.boot:spring-boot-configuration-processor")
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+	testImplementation("de.flapdoodle.embed:de.flapdoodle.embed.mongo:4.14.0")
+	testImplementation("com.github.codemonstur:embedded-redis:1.4.3")
 	testImplementation("io.projectreactor:reactor-test")
+
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
