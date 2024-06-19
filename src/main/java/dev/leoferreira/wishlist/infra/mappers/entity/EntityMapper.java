@@ -4,12 +4,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-public interface EntityMapper <ENTITY, DOMAIN>{
-    ENTITY toEntity(DOMAIN domainObj);
+public interface EntityMapper <E, D>{
+    E toEntity(D domainObj);
 
-    DOMAIN toDomain(ENTITY entityObj);
+    D toDomain(E entityObj);
 
-    default List<DOMAIN> toDomainList(List<ENTITY> entityList) {
+    default List<D> toDomainList(List<E> entityList) {
         return Optional.ofNullable(entityList)
                 .orElse(Collections.emptyList())
                 .stream()

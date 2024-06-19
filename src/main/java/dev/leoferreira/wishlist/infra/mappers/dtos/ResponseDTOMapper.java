@@ -4,10 +4,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-public interface ResponseDTOMapper<DTO, DOMAIN>{
-    DTO toDTO(DOMAIN domainObj);
+public interface ResponseDTOMapper<T, D>{
+    T toDTO(D domainObj);
 
-    default List<DTO> toDTOList(List<DOMAIN> domainList) {
+    default List<T> toDTOList(List<D> domainList) {
         return Optional.ofNullable(domainList)
                 .orElse(Collections.emptyList())
                 .stream()
