@@ -34,7 +34,7 @@ public class GenericErrorResponseCustomizer implements OpenApiCustomizer {
                     )
             );
 
-    private final static ApiResponse NOT_FOUND_RESPONSE = new ApiResponse()
+    private static final ApiResponse NOT_FOUND_RESPONSE = new ApiResponse()
             .description("Not Found")
             .content(
                     new Content().addMediaType(
@@ -45,7 +45,7 @@ public class GenericErrorResponseCustomizer implements OpenApiCustomizer {
                     )
             );
 
-    private final static ApiResponse SERVER_ERROR_RESPONSE = new ApiResponse()
+    private static final ApiResponse SERVER_ERROR_RESPONSE = new ApiResponse()
             .description("Internal Server Error")
             .content(
                     new Content().addMediaType(
