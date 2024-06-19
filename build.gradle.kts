@@ -27,8 +27,11 @@ repositories {
 	mavenCentral()
 }
 
+val springdocVersion = "2.3.0"
+val testcontainersVersion = "1.19.8"
+
 dependencies {
-	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
+	implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:$springdocVersion")
 	implementation("org.springframework.boot:spring-boot-starter-data-mongodb")
 	implementation("org.springframework.boot:spring-boot-starter-data-redis")
 	implementation("org.springframework.boot:spring-boot-starter-web")
@@ -39,9 +42,9 @@ dependencies {
 
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 	testImplementation("org.springframework.boot:spring-boot-testcontainers")
-	testImplementation("org.testcontainers:testcontainers:1.19.8")
-	testImplementation("org.testcontainers:mongodb:1.19.8")
-	testImplementation("org.testcontainers:junit-jupiter:1.19.8")
+	testImplementation("org.testcontainers:testcontainers:$testcontainersVersion")
+	testImplementation("org.testcontainers:mongodb:$testcontainersVersion")
+	testImplementation("org.testcontainers:junit-jupiter:$testcontainersVersion")
 	testImplementation("io.projectreactor:reactor-test")
 
 	testRuntimeOnly("org.junit.platform:junit-platform-launcher")
