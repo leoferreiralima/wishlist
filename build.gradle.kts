@@ -1,8 +1,12 @@
 plugins {
 	java
+	jacoco
+
 	id("org.springframework.boot") version "3.3.0"
 	id("io.spring.dependency-management") version "1.1.5"
+	id("org.sonarqube") version "5.0.0.4638"
 }
+
 
 group = "dev.leoferreira"
 version = "0.0.1-SNAPSHOT"
@@ -45,4 +49,22 @@ dependencies {
 
 tasks.withType<Test> {
 	useJUnitPlatform()
+}
+
+tasks.test {
+	finalizedBy(tasks.jacocoTestReport)
+}
+tasks.jacocoTestReport {
+	dependsOn(tasks.test)
+	reports {
+		xml.required = false
+	}
+}
+
+sonar {
+	properties {
+		property("sonar.projectKey", "leoferreiralima_wishlist")
+		property("sonar.organization", "leoferreiralima")
+		property("sonar.host.url", "https://sonarcloud.io")
+	}
 }
