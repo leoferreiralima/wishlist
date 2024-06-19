@@ -1,0 +1,7 @@
+spring:
+  data:
+    redis:
+      username: ${SPRING_REDIS_USER}
+      password: ${SPRING_REDIS_PASSWORD}
+      ssl:
+        enabled: ${SPRING_REDIS_SSL_ENABLED}
