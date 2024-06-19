@@ -17,7 +17,7 @@ spring:
       database: wishlist
       auto-index-creation: true
     redis:
-      host: ${SPRING_REDIS_HOST:redis}
+      host: ${SPRING_REDIS_HOST:localhost}
       port: ${SPRING_REDIS_PORT:6379}
 wishlist:
   user-max-limit: 20
