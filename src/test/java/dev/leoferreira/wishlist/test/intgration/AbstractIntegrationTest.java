@@ -15,7 +15,7 @@ import org.testcontainers.utility.DockerImageName;
 @AutoConfigureMockMvc
 @AutoConfigureDataMongo
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.MOCK)
-public class AbstractIntegrationTest {
+public abstract class AbstractIntegrationTest {
     @Container
     @ServiceConnection
     static MongoDBContainer mongo = new MongoDBContainer(DockerImageName.parse("mongo:latest"));

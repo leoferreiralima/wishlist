@@ -30,7 +30,7 @@ class WishlistMongoRepositoryGatewayUnitTest {
     private WishlistMongoRepositoryGateway gateway;
 
     @Test
-    public void givenValidUserId_WhenGetWishlistCountByUser_ThenCountWishlistByUser() {
+    void givenValidUserId_WhenGetWishlistCountByUser_ThenCountWishlistByUser() {
         String userId = "userId";
 
         given(wishlistMongoRepository.countByCreatedBy(userId))
@@ -44,7 +44,7 @@ class WishlistMongoRepositoryGatewayUnitTest {
     }
 
     @Test
-    public void givenNewWishlist_WhenCreateWishlistEntity_ThenReturnWishlist() {
+    void givenNewWishlist_WhenCreateWishlistEntity_ThenReturnWishlist() {
         Wishlist newWishlist = mock(Wishlist.class);
         Wishlist savedWishlist = mock(Wishlist.class);
 
@@ -76,7 +76,7 @@ class WishlistMongoRepositoryGatewayUnitTest {
     }
 
     @Test
-    public void givenValidUserId_WhenGetAllWishlists_ThenReturnWishlists() {
+    void givenValidUserId_WhenGetAllWishlists_ThenReturnWishlists() {
         String userId = "userId";
         List<WishlistEntity> wishlistEntities = List.of(mock(WishlistEntity.class));
         List<Wishlist> wishlists = List.of(mock(Wishlist.class));
@@ -99,7 +99,7 @@ class WishlistMongoRepositoryGatewayUnitTest {
     }
 
     @Test
-    public void givenValidUserIdAndProductId_WhenGetWishlistByProduct_ThenReturnWishlist() {
+    void givenValidUserIdAndProductId_WhenGetWishlistByProduct_ThenReturnWishlist() {
         String userId = "userId";
         String productId = "productId";
         WishlistEntity wishlistEntity = mock(WishlistEntity.class);
@@ -126,7 +126,7 @@ class WishlistMongoRepositoryGatewayUnitTest {
     }
 
     @Test
-    public void givenWishlist_WhenRemoveWishlist_ThenDeleteWishlist() {
+    void givenWishlist_WhenRemoveWishlist_ThenDeleteWishlist() {
         Wishlist wishlist = mock(Wishlist.class);
         String wishlistId = "wishlistId";
 

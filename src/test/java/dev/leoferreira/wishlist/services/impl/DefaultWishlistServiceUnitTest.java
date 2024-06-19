@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.BDDMockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class DefaultWishlistServiceUnitTest {
+class DefaultWishlistServiceUnitTest {
 
     @Spy
     private final WishlistConfig wishlistConfig = new WishlistConfig(20);
@@ -32,7 +32,7 @@ public class DefaultWishlistServiceUnitTest {
     private DefaultWishlistService wishlistService;
 
     @Test
-    public void givenValidUserIdAndProductId_WhenWishlistAlreadyExists_ThenThrowWishlistAlreadyExistsException() {
+    void givenValidUserIdAndProductId_WhenWishlistAlreadyExists_ThenThrowWishlistAlreadyExistsException() {
         String userId = "userId";
         String productId = "productId";
 
@@ -51,7 +51,7 @@ public class DefaultWishlistServiceUnitTest {
     }
 
     @Test
-    public void givenValidUserIdAndProductId_WhenUserHas20Wishlists_ThenThrowWishlistCountExceededException() {
+    void givenValidUserIdAndProductId_WhenUserHas20Wishlists_ThenThrowWishlistCountExceededException() {
         String userId = "userId";
         String productId = "productId";
 
@@ -78,7 +78,7 @@ public class DefaultWishlistServiceUnitTest {
     }
 
     @Test
-    public void givenValidUserIdAndProductId_WhenCreateWishlist_ThenCreateNewWishlist() {
+    void givenValidUserIdAndProductId_WhenCreateWishlist_ThenCreateNewWishlist() {
         String userId = "userId";
         String productId = "productId";
 
@@ -105,7 +105,7 @@ public class DefaultWishlistServiceUnitTest {
     }
 
     @Test
-    public void givenValidUserId_WhenGetAllWishlists_ThenReturnWishlists() {
+    void givenValidUserId_WhenGetAllWishlists_ThenReturnWishlists() {
         String userId = "userId";
 
         List<Wishlist> wishlists = List.of(
@@ -127,7 +127,7 @@ public class DefaultWishlistServiceUnitTest {
     }
 
     @Test
-    public void givenValidUserIdAndProductId_WhenWishlistNotFound_ThenThrowWishlistNotFoundException() {
+    void givenValidUserIdAndProductId_WhenWishlistNotFound_ThenThrowWishlistNotFoundException() {
         String userId = "userId";
         String productId = "productId";
 
@@ -137,8 +137,8 @@ public class DefaultWishlistServiceUnitTest {
 
         assertThrows(
                 WishlistNotFoundException.class,
-                ()->wishlistService.getWishlistByProduct(userId, productId)
-                );
+                () -> wishlistService.getWishlistByProduct(userId, productId)
+        );
 
 
         then(wishlistGateway)
@@ -147,7 +147,7 @@ public class DefaultWishlistServiceUnitTest {
     }
 
     @Test
-    public void givenValidUserIdAndProductId_WhenWishlistFound_ThenReturnWishlist() {
+    void givenValidUserIdAndProductId_WhenWishlistFound_ThenReturnWishlist() {
         String userId = "userId";
         String productId = "productId";
 
@@ -168,7 +168,7 @@ public class DefaultWishlistServiceUnitTest {
     }
 
     @Test
-    public void givenValidUserIdAndProductId_WhenRemoveWishlist_ThenWishlistIsRemoved() {
+    void givenValidUserIdAndProductId_WhenRemoveWishlist_ThenWishlistIsRemoved() {
         String userId = "userId";
         String productId = "productId";
 
