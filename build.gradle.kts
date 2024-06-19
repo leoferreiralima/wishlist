@@ -66,5 +66,6 @@ sonar {
 		property("sonar.projectKey", "leoferreiralima_wishlist")
 		property("sonar.organization", "leoferreiralima")
 		property("sonar.host.url", "https://sonarcloud.io")
+		property("sonar.coverage.exclusions", "src/main/java/dev/leoferreira/wishlist/WishlistApplication.java, src/main/java/dev/leoferreira/wishlist/**/GenericErrorResponseCustomizer.java")
 	}
 }
