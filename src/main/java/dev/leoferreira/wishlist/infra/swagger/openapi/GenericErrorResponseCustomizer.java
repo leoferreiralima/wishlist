@@ -20,17 +20,41 @@ public class GenericErrorResponseCustomizer implements OpenApiCustomizer {
             .addProperty("message", new StringSchema())
             .addProperty("path", new StringSchema());
 
-    private final static ApiResponse BAD_REQUEST_RESPONSE = new ApiResponse()
+    private static final String APPLICATION_JSON = org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
+    private static final String GENERIC_ERROR_RESPONSE_SCHEMA_REF = "#/components/schemas/GenericErrorResponse";
+
+    private static final ApiResponse BAD_REQUEST_RESPONSE = new ApiResponse()
             .description("Bad Request")
-            .content(new Content().addMediaType("application/json", new MediaType().schema(new Schema<>().$ref("#/components/schemas/GenericErrorResponse"))));
+            .content(
+                    new Content().addMediaType(
+                            APPLICATION_JSON,
+                            new MediaType().schema(
+                                    new Schema<>().$ref(GENERIC_ERROR_RESPONSE_SCHEMA_REF)
+                            )
+                    )
+            );
 
     private final static ApiResponse NOT_FOUND_RESPONSE = new ApiResponse()
             .description("Not Found")
-            .content(new Content().addMediaType("application/json", new MediaType().schema(new Schema<>().$ref("#/components/schemas/GenericErrorResponse"))));
+            .content(
+                    new Content().addMediaType(
+                            APPLICATION_JSON,
+                            new MediaType().schema(
+                                    new Schema<>().$ref(GENERIC_ERROR_RESPONSE_SCHEMA_REF)
+                            )
+                    )
+            );
 
     private final static ApiResponse SERVER_ERROR_RESPONSE = new ApiResponse()
             .description("Internal Server Error")
-            .content(new Content().addMediaType("application/json", new MediaType().schema(new Schema<>().$ref("#/components/schemas/GenericErrorResponse"))));
+            .content(
+                    new Content().addMediaType(
+                            APPLICATION_JSON,
+                            new MediaType().schema(
+                                    new Schema<>().$ref(GENERIC_ERROR_RESPONSE_SCHEMA_REF)
+                            )
+                    )
+            );
 
     @Override
     public void customise(OpenAPI openApi) {
