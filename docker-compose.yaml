@@ -1,20 +1,18 @@
 services:
   wishlist-app:
-    build:
-      context: .
-      dockerfile: Dockerfile
+    image: leoferreiralima/wishlist:latest
     ports:
       - "8000:8000"
     environment:
-      - SPRING_PROFILES_ACTIVE=dev
-      - SPRING_DATA_MONGODB_URI=mongodb://root:secret@mongo:27017/wishlist
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_DATA_MONGODB_URI=mongodb://root:secret@mongo:27017/?authSource=admin
       - SPRING_REDIS_HOST=redis
       - SPRING_REDIS_PORT=6379
+    networks:
+      - wishlist_network
     depends_on:
       - mongo
       - redis
-    labels:
-      org.springframework.boot.ignore: true
   mongo:
     image: 'mongo:latest'
     environment:
@@ -24,6 +22,8 @@ services:
       - '27017:27017'
     volumes:
       - mongo_data:/data/db
+    networks:
+      - wishlist_network
   mongo-express:
     image: mongo-express:latest
     ports:
@@ -33,20 +33,32 @@ services:
       - ME_CONFIG_MONGODB_ADMINUSERNAME=root
       - ME_CONFIG_MONGODB_ADMINPASSWORD=secret
       - ME_CONFIG_MONGODB_SERVER=mongo
+    networks:
+      - wishlist_network
+    depends_on:
+      - mongo
   redis:
     image: 'redis:latest'
     ports:
       - '6379:6379'
     volumes:
       - redis_data:/data
+    networks:
+      - wishlist_network
   redis-gui:
     image: rediscommander/redis-commander:latest
     ports:
       - "8082:8081"
     environment:
       - REDIS_HOSTS=local:redis:6379
+    networks:
+      - wishlist_network
     depends_on:
       - redis
 volumes:
   mongo_data:
   redis_data:
+
+networks:
+  wishlist_network:
+    driver: bridge
