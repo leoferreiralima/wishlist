@@ -1,6 +1,6 @@
 services:
   wishlist-app:
-    image: leoferreiralima/wishlist:v0.0.1
+    image: leoferreiralima/wishlist:latest
     ports:
       - "8000:8000"
     environment:
