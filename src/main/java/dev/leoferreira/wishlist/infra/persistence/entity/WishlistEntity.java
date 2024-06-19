@@ -10,9 +10,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.time.Instant;
 
 @Document("wishlists")
-@CompoundIndexes({
-        @CompoundIndex(name = "createdBy_productId", def = "{'createdBy' : 1, 'productId': 1}"),
-})
+@CompoundIndex(name = "createdBy_productId", def = "{'createdBy' : 1, 'productId': 1}")
 public class WishlistEntity {
 
     @Id

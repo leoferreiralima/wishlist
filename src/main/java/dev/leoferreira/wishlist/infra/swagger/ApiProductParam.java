@@ -1,7 +1,6 @@
 package dev.leoferreira.wishlist.infra.swagger;
 
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.Parameters;
 import io.swagger.v3.oas.annotations.enums.ParameterIn;
 import io.swagger.v3.oas.annotations.media.Schema;
 
@@ -12,14 +11,12 @@ import java.lang.annotation.Target;
 
 @Target({ElementType.TYPE, ElementType.METHOD})
 @Retention(RetentionPolicy.RUNTIME)
-@Parameters({
-        @Parameter(
-                name = "productId",
-                description = "Product identifier",
-                required = true,
-                schema = @Schema(type = "string"),
-                in = ParameterIn.PATH
-        )
-})
+@Parameter(
+        name = "productId",
+        description = "Product identifier",
+        required = true,
+        schema = @Schema(type = "string"),
+        in = ParameterIn.PATH
+)
 public @interface ApiProductParam {
 }
