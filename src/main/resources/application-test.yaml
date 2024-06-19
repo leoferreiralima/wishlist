@@ -1,5 +1,7 @@
 spring:
+  cache:
+    type: none
   data:
     mongodb:
-      uri: mongodb://localhost:27018
+      uri: mongodb://localhost:28017
       database: wishlist_test

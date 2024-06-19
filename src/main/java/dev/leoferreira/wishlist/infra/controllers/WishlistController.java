@@ -61,7 +61,6 @@ public class WishlistController implements WishlistApiDoc {
     }
 
     @GetMapping("/products/{productId}")
-    @ResponseStatus(HttpStatus.CREATED)
     @Cacheable(value = "wishlist-product", key = "#userId + ':' + #productId")
     public WishlistResponseDTO getWishlistByProduct(
             @PathVariable String userId,
