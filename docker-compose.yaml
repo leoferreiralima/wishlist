@@ -4,7 +4,6 @@ services:
     ports:
       - "8000:8000"
     environment:
-      - SPRING_PROFILES_ACTIVE=prod
       - SPRING_DATA_MONGODB_URI=mongodb://root:secret@mongo:27017/?authSource=admin
       - SPRING_REDIS_HOST=redis
       - SPRING_REDIS_PORT=6379

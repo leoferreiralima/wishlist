@@ -68,3 +68,23 @@ jobs:
             ${{ secrets.DOCKER_USERNAME }}/wishlist:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache
+
+  deploy:
+    needs: publish
+    runs-on: self-hosted
+    steps:
+      - name: Pull image from docker hub
+        run: docker pull ${{ secrets.DOCKER_USERNAME }}/wishlist:latest
+      - name: Remove docker container
+        run: docker rm -f wishlist-app || true
+      - name: Run docker container
+        run: |
+          docker run -d -p 8000:8000 \
+          -e SPRING_PROFILES_ACTIVE=prod \
+          -e SPRING_DATA_MONGODB_URI='${{secrets.MONGO_DB_URI}}' \
+          -e SPRING_REDIS_HOST='${{secrets.REDIS_HOST}}' \
+          -e SPRING_REDIS_PORT='${{secrets.REDIS_PORT}}' \
+          -e SPRING_REDIS_USER='${{secrets.REDIS_USER}}' \
+          -e SPRING_REDIS_PASSWORD='${{secrets.REDIS_PASSWORD}}' \
+          -e SPRING_REDIS_SSL_ENABLED='true' \
+          --name wishlist-app ${{ secrets.DOCKER_USERNAME }}/wishlist
