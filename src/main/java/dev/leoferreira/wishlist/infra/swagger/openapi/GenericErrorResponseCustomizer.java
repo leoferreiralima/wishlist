@@ -13,7 +13,7 @@ import java.util.Collection;
 public class GenericErrorResponseCustomizer implements OpenApiCustomizer {
 
     @SuppressWarnings("rawtypes")
-    private final static Schema GENERIC_ERROR_RESPONSE_SCHEMA = new ObjectSchema()
+    private static final Schema GENERIC_ERROR_RESPONSE_SCHEMA = new ObjectSchema()
             .addProperty("timestamp", new DateTimeSchema())
             .addProperty("status", new IntegerSchema())
             .addProperty("error", new StringSchema())
