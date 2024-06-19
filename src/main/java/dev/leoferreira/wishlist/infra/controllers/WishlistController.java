@@ -5,7 +5,6 @@ import dev.leoferreira.wishlist.infra.dtos.WishlistResponseDTO;
 import dev.leoferreira.wishlist.infra.dtos.WishlistResponseListDTO;
 import dev.leoferreira.wishlist.infra.mappers.dtos.ResponseDTOMapper;
 import dev.leoferreira.wishlist.services.WishlistService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
@@ -22,12 +21,19 @@ import org.springframework.web.bind.annotation.*;
 )
 public class WishlistController implements WishlistApiDoc {
 
-    @Autowired
-    private WishlistService wishlistService;
+    private final WishlistService wishlistService;
 
-    @Autowired
-    @Qualifier("wishlistResponseDTOMapper")
-    private ResponseDTOMapper<WishlistResponseDTO, Wishlist> wishlistResponseDTOMapper;
+    private final ResponseDTOMapper<WishlistResponseDTO, Wishlist> wishlistResponseDTOMapper;
+
+
+    public WishlistController(
+            WishlistService wishlistService,
+            @Qualifier("wishlistResponseDTOMapper")
+            ResponseDTOMapper<WishlistResponseDTO, Wishlist> wishlistResponseDTOMapper
+    ) {
+        this.wishlistService = wishlistService;
+        this.wishlistResponseDTOMapper = wishlistResponseDTOMapper;
+    }
 
     @GetMapping
     @Cacheable(value = "wishlist", key = "#userId")
