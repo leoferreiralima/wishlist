@@ -1,8 +1,9 @@
 name: Release
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - "v*.*.*"
 
 jobs:
   publish:
@@ -17,9 +18,13 @@ jobs:
           distribution: temurin
           java-version: 17
 
+      - name: Extract tag name
+        id: extract_tag
+        run: echo "::set-output name=tag_name::$(echo ${GITHUB_REF#refs/tags/})"
+
       - name: Update version in build.gradle.kts
         run: |
-          VERSION_TAG=${GITHUB_REF#refs/tags/}
+          VERSION_TAG=${{ steps.extract_tag.outputs.tag_name }}
           sed -i "s/version = \".*\"/version = \"${VERSION_TAG}\"/" build.gradle.kts
           
       - name: Setup Gradle
@@ -33,7 +38,16 @@ jobs:
       - name: Build
         run: ./gradlew build --info
 
+      - name: Cache Docker layers
+        uses: actions/cache@v3
+        with:
+          path: /tmp/.buildx-cache
+          key: ${{ runner.os }}-buildx-${{ github.sha }}
+          restore-keys: |
+            ${{ runner.os }}-buildx-
+
       - name: Set up Docker Buildx
+        id: buildx
         uses: docker/setup-buildx-action@v2
 
       - name: Log in to Docker Hub
@@ -45,7 +59,12 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
+          context: .
+          file: ./Dockerfile
+          builder: ${{ steps.buildx.outputs.name }}
           push: true
           tags: |
-            ${{ secrets.DOCKER_USERNAME }}/wishlist:${GITHUB_REF#refs/tags/}
+            ${{ secrets.DOCKER_USERNAME }}/wishlist:${{ steps.extract_tag.outputs.tag_name }}
             ${{ secrets.DOCKER_USERNAME }}/wishlist:latest
+          cache-from: type=local,src=/tmp/.buildx-cache
+          cache-to: type=local,dest=/tmp/.buildx-cache
