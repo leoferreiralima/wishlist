@@ -73,6 +73,18 @@ jobs:
     needs: publish
     runs-on: self-hosted
     steps:
+      - name: Delete workspace directory
+        run: rm -rf $GITHUB_WORKSPACE/*
+
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            server
+          sparse-checkout-cone-mode: false
+
+      - name: Echo GitHub Workspace
+        run: echo "GitHub workspace is located at $GITHUB_WORKSPACE"
+
       - name: Pull image from docker hub
         run: docker pull ${{ secrets.DOCKER_USERNAME }}/wishlist:latest
       - name: Remove docker container
