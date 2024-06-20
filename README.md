@@ -25,8 +25,8 @@ Esta aplicação é projetada para fornecer um serviço de Wishlist para uma pla
 - **Spring Boot**
 - **Jacoco**
 - **Gradle**
-- **MongoDB**
-- **Redis**
+- **MongoDB** (Banco de Dados Principal)
+- **Redis** (Cache)
 - **Docker**
 - **Nginx**
 - **Aws EC2**
@@ -116,8 +116,6 @@ O projeto já possui uma excelente estrutura, mas sempre há espaço para melhor
 - Integração entre os serviços de Produto e Usuário
 - Autenticação (Token JWT)
 
-
 ## License
 
 [MIT](https://choosealicense.com/licenses/mit/)
-
