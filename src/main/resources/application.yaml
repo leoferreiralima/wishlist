@@ -2,6 +2,7 @@ server:
   port: 8000
   error:
     include-stacktrace: NEVER
+    include-message: ALWAYS
   servlet:
     context-path: /wishlist/v1
 spring:
