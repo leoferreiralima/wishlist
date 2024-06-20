@@ -1,0 +1,35 @@
+services:
+  api1:
+    image: leoferreiralima/wishlist:latest
+    restart: always
+    ports:
+      - "8000:8000"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+      - SPRING_DATA_MONGODB_URI
+      - SPRING_REDIS_HOST
+      - SPRING_REDIS_PORT
+      - SPRING_REDIS_USER
+      - SPRING_REDIS_PASSWORD
+      - SPRING_REDIS_SSL_ENABLED=true
+      - JAVA_OPTS=-Xmx300m
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 350M
+
+  nginx:
+    build:
+      context: nginx
+      dockerfile: Dockerfile
+    restart: always
+    ports:
+      - "80:80"
+    depends_on:
+      - api1
+    deploy:
+      resources:
+        limits:
+          cpus: '0.15'
+          memory: 100M

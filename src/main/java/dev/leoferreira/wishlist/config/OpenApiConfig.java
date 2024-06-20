@@ -1,6 +1,7 @@
 package dev.leoferreira.wishlist.config;
 
 import dev.leoferreira.wishlist.infra.swagger.openapi.GenericErrorResponseCustomizer;
+import dev.leoferreira.wishlist.infra.swagger.openapi.RefererServerBaseUrlCustomizer;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import org.springdoc.core.customizers.OpenApiCustomizer;
@@ -22,5 +23,10 @@ public class OpenApiConfig {
     @Bean("genericErrorResponseCustomizer")
     public OpenApiCustomizer genericErrorResponseCustomizer() {
         return new GenericErrorResponseCustomizer();
+    }
+
+    @Bean("refererServerBaseUrlCustomizer")
+    public RefererServerBaseUrlCustomizer refererServerBaseUrlCustomizer() {
+        return new RefererServerBaseUrlCustomizer();
     }
 }
