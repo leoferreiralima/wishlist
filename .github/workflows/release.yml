@@ -73,18 +73,49 @@ jobs:
     needs: publish
     runs-on: self-hosted
     steps:
+      - name: Delete workspace directory
+        run: rm -rf $GITHUB_WORKSPACE/*
+
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            server
+          sparse-checkout-cone-mode: false
+
+      - name: Echo GitHub Workspace
+        run: echo "GitHub workspace is located at $GITHUB_WORKSPACE"
+
+      - name: Set up environment variables
+        run: |
+          echo "SPRING_PROFILES_ACTIVE=prod" > $GITHUB_WORKSPACE/server/.env
+          echo "SPRING_DATA_MONGODB_URI=${{ secrets.MONGO_DB_URI }}" >> $GITHUB_WORKSPACE/server/.env
+          echo "SPRING_REDIS_HOST=${{ secrets.REDIS_HOST }}" >> $GITHUB_WORKSPACE/server/.env
+          echo "SPRING_REDIS_PORT=${{ secrets.REDIS_PORT }}" >> $GITHUB_WORKSPACE/server/.env
+          echo "SPRING_REDIS_USER=${{ secrets.REDIS_USER }}" >> $GITHUB_WORKSPACE/server/.env
+          echo "SPRING_REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }}" >> $GITHUB_WORKSPACE/server/.env
+          echo "SPRING_REDIS_SSL_ENABLED=true" >> $GITHUB_WORKSPACE/server/.env
+          echo "JAVA_OPTS=-Xmx300m" >> $GITHUB_WORKSPACE/server/.env
+
       - name: Pull image from docker hub
         run: docker pull ${{ secrets.DOCKER_USERNAME }}/wishlist:latest
-      - name: Remove docker container
-        run: docker rm -f wishlist-app || true
-      - name: Run docker container
+#      - name: Remove docker container
+#        run: docker rm -f wishlist-app || true
+#      - name: Run docker container
+#        run: |
+#          docker run -d -p 8000:8000 \
+#          -e SPRING_PROFILES_ACTIVE=prod \
+#          -e SPRING_DATA_MONGODB_URI='${{secrets.MONGO_DB_URI}}' \
+#          -e SPRING_REDIS_HOST='${{secrets.REDIS_HOST}}' \
+#          -e SPRING_REDIS_PORT='${{secrets.REDIS_PORT}}' \
+#          -e SPRING_REDIS_USER='${{secrets.REDIS_USER}}' \
+#          -e SPRING_REDIS_PASSWORD='${{secrets.REDIS_PASSWORD}}' \
+#          -e SPRING_REDIS_SSL_ENABLED='true' \
+#          --name wishlist-app ${{ secrets.DOCKER_USERNAME }}/wishlist
+      - name: Start Containers
         run: |
-          docker run -d -p 8000:8000 \
-          -e SPRING_PROFILES_ACTIVE=prod \
-          -e SPRING_DATA_MONGODB_URI='${{secrets.MONGO_DB_URI}}' \
-          -e SPRING_REDIS_HOST='${{secrets.REDIS_HOST}}' \
-          -e SPRING_REDIS_PORT='${{secrets.REDIS_PORT}}' \
-          -e SPRING_REDIS_USER='${{secrets.REDIS_USER}}' \
-          -e SPRING_REDIS_PASSWORD='${{secrets.REDIS_PASSWORD}}' \
-          -e SPRING_REDIS_SSL_ENABLED='true' \
-          --name wishlist-app ${{ secrets.DOCKER_USERNAME }}/wishlist
+          docker-compose \
+          -f $GITHUB_WORKSPACE/server/docker-compose.yaml \
+          up -d \
+          --force-recreate \
+          --remove-orphans \
+          --build
